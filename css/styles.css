@@ -1,0 +1,36 @@
+body{
+    margin: 0; 
+    padding: 0; 
+    background-color: #f8f8ffea; 
+}
+
+.navbar-container{
+    background-color:rgb(25, 25, 167); 
+    height: 8vh; 
+    padding-top: 20px; 
+}
+
+
+#welcome{
+    color: white; 
+    text-decoration-style: none; 
+    font-weight: normal; 
+    text-align: center; 
+    margin-top: 9px;  
+}
+
+
+#choose{
+    text-decoration-style: none; 
+    font-weight: normal; 
+    margin-left: 10vw; 
+}
+
+.character-container label{
+    font-size: 1.3em;
+}
+
+.character-container input{
+    margin-top: 10px; 
+    margin-left: 20vw; 
+}
