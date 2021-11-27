@@ -331,7 +331,72 @@ let con7Label = document.getElementById('con7-label');
 let con8 = document.getElementById('con8'); 
 let con8Label = document.getElementById('con8-label'); 
 let con9 = document.getElementById('con9'); 
-let con9Label = document.getElementById('con9-label'); 
+let con9Label = document.getElementById('con9-label');
+
+let graphCoordinates = [[100, 100], [300, 80], [500, 120], [660, 200], [720,340], [660, 480], [500, 480], [290, 530], [90, 320]]; 
+
+let c = document.getElementById('myCanvas'); 
+let ctx = c.getContext('2d'); 
+
+// ctx.beginPath(); 
+// ctx.arc(100,100,30,0,2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+ctx.font = "17px Times New Roman"
+// ctx.fillText('Romeo', graphCoordinates[1][0]-25, graphCoordinates[1][1]); 
+
+
+
+// ctx.beginPath(); 
+// ctx.arc(300, 80, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(500, 120, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(660, 200, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(720, 340, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(660, 480, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(500, 480, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(290, 530, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+// ctx.beginPath(); 
+// ctx.arc(90, 320, 30, 0, 2*Math.PI); 
+// ctx.closePath(); 
+// ctx.stroke(); 
+
+
+
+
+
+// function printMousePos(e){
+//     console.log(e.clientX, e.clientY); 
+// }
+
+// document.addEventListener('click', printMousePos); 
 
 
 let characters = [juliet, romeo, friar, capulet, ladyCapulet, montague, ladyMontague, benvolio, nurse]; 
@@ -339,15 +404,15 @@ let characters = [juliet, romeo, friar, capulet, ladyCapulet, montague, ladyMont
 let connectionCharacters = [con1, con2, con3, con4, con5, con6, con7, con8,con9]; 
 
 
-let allConnections = []; 
 
 let submitCharacter = document.getElementById('submit-characters');
 
-let charactersToUse = []; 
 
 
 
 submitCharacter.onclick = function findCharacters(){
+    let charactersToUse = []; 
+
     for (let i = 0; i<characters.length; i++) {
         character = characters[i]; 
         if(character.checked){
@@ -375,17 +440,30 @@ submitCharacter.onclick = function findCharacters(){
 
         for(let i = 0; i<useCharacterConnections.length; i++){
             useCharacterConnections[i].style.opacity = '100%'; 
-            useCharacterLabels[i].innerHTML = charactersToUse[i]; 
+            if(charactersToUse[i] == 'Lady Capulet'){
+            useCharacterLabels[i].innerHTML = 'LadyCapulet'; 
+            } 
+            else if(charactersToUse[i] == 'Lady Montague'){
+                useCharacterLabels[i].innerHTML = 'LadyMontague'; 
+            }
+            else{
+                useCharacterLabels[i].innerHTML = charactersToUse[i]; 
+            }
             useCharacterLabels[i].opacity = '100%'; 
         }
 
         submitConnections.onclick = function findConnections(){
+
+            let allConnections = []; 
+            let easyConnections = []; 
+
             for(let i = 0; i<useCharacterConnections.length; i++){
                 let userConnection = useCharacterConnections[i].value; 
                 let userConnectionLabel = useCharacterLabels[i].innerHTML; 
                 let splitConnection = userConnection.split(" "); 
                 let addConnection = []; 
                 let add2Connection = [];
+                
                 addConnection.push(userConnectionLabel); 
                 
                 if(splitConnection.length > 0){
@@ -397,6 +475,8 @@ submitCharacter.onclick = function findCharacters(){
                     if(seperateWeight[0] && weight){
                         add2Connection.push([seperateWeight[0], weight]); 
                     } 
+
+                    easyConnections.push([userConnectionLabel, seperateWeight[0], weight]); 
                     
 
 
@@ -424,11 +504,64 @@ submitCharacter.onclick = function findCharacters(){
 
             // console.log("D", d); 
 
+            
+            let twoConnections = prompt('Which two characters do you want to find the shortest path between?'); 
+
+            let twoCharacters = twoConnections.split(' '); 
+
+            // characters in use under useCharacterLabels 
+
+            let characterNumber = []; 
+            
 
 
+            if(twoCharacters){
             let d = new Dijkstras(); 
              d.setGraph(allConnections); 
-             console.log(d.getPath('Romeo', 'Juliet')); 
+             console.log(d.getPath(twoCharacters[0], twoCharacters[1])); 
+
+             let numCharacters = useCharacterLabels.length; 
+
+            // display character names in nodes
+             for(let i=0; i<numCharacters; i++){
+                 ctx.beginPath(); 
+                 ctx.arc(graphCoordinates[i][0], graphCoordinates[i][1], 30, 0, Math.PI * 2); 
+                 ctx.closePath(); 
+                 ctx.stroke(); 
+
+                 ctx.fillText(useCharacterLabels[i].innerHTML, graphCoordinates[i][0] - 25, graphCoordinates[i][1]); 
+
+                 characterNumber.push([i, useCharacterLabels[i].innerHTML]);  
+
+
+             }
+
+             // connections 
+             for(let i = 0; i<easyConnections.length; i++){
+                 let source = easyConnections[i][0]; 
+                 let end = easyConnections[i][1]; 
+                 let numSource, numEnd; 
+
+                 for(let j = 0; j<characterNumber.length; j++){
+                     if(characterNumber[j][1] == source){
+                         numSource = characterNumber[j][0]; 
+                     }
+                     else if(characterNumber[j][1] == end){
+                         numEnd = characterNumber[j][0]; 
+                     }
+                 }
+
+                 ctx.beginPath(); 
+                 ctx.moveTo(graphCoordinates[numSource][0], graphCoordinates[numSource][1]); 
+                 ctx.lineTo(graphCoordinates[numEnd][0], graphCoordinates[numEnd][1]); 
+                 ctx.closePath(); 
+                 ctx.stroke(); 
+
+
+                
+             }
+
+            } 
            /*
             d.setGraph(
                 [

@@ -56,3 +56,11 @@ body{
     
 }
 
+
+#myCanvas{
+    background-color: lightgray; 
+    position: absolute; 
+    right: 50px; 
+    top: 16vh;
+    
+}
