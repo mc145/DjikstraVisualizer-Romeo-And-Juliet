@@ -610,6 +610,7 @@ submitCharacter.onclick = function findCharacters(){
              ctx.strokeStyle = ''
 
 
+
             } 
            /*
             d.setGraph(
