@@ -1,4 +1,5 @@
 
+
 var Dijkstras = (function () {
 
     var Dijkstras = function () {
