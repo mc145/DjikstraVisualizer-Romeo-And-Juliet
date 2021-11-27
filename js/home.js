@@ -518,6 +518,7 @@ submitCharacter.onclick = function findCharacters(){
             if(twoCharacters){
             let d = new Dijkstras(); 
              d.setGraph(allConnections); 
+             let shortPath = d.getPath(twoCharacters[0], twoCharacters[1]); 
              console.log(d.getPath(twoCharacters[0], twoCharacters[1])); 
 
              let numCharacters = useCharacterLabels.length; 
@@ -560,6 +561,53 @@ submitCharacter.onclick = function findCharacters(){
 
                 
              }
+
+             ctx.fillStyle = 'rgb(255,0,0)'; 
+             ctx.strokeStyle = 'rgb(255,0,0)'; 
+
+             for(let i = 1; i<shortPath.length; i++){
+                
+                let curNum; 
+                let preNum; 
+                for(let j = 0; j<characterNumber.length; j++){
+                    if(characterNumber[j][1] == shortPath[i]){
+                        curNum = characterNumber[j][0]; 
+                    }
+                    if(characterNumber[j][1] == shortPath[i-1]){
+                        preNum = characterNumber[j][0]; 
+                    }
+                }
+
+                ctx.beginPath(); 
+                ctx.moveTo(graphCoordinates[preNum][0], graphCoordinates[preNum][1]); 
+                ctx.lineTo(graphCoordinates[curNum][0], graphCoordinates[curNum][1]); 
+                ctx.closePath(); 
+                ctx.stroke(); 
+
+
+                
+             } 
+             let startNum; 
+             let secNum; 
+
+             for(let i = 0; i<characterNumber.length; i++){
+                 if(characterNumber[i][1] == twoCharacters[0]){
+                    startNum = characterNumber[i][0]; 
+                 }
+                 if(characterNumber[i][1] == shortPath[0]){
+                     secNum = characterNumber[i][0]; 
+                 }
+             }
+
+             ctx.beginPath(); 
+             ctx.moveTo(graphCoordinates[startNum][0], graphCoordinates[startNum][1]); 
+             ctx.lineTo(graphCoordinates[secNum][0], graphCoordinates[secNum][1]); 
+             ctx.closePath(); 
+             ctx.stroke(); 
+
+             ctx.fillStyle = ''; 
+             ctx.strokeStyle = ''
+
 
             } 
            /*
