@@ -77,3 +77,16 @@ body{
     top: 16vh;
     
 }
+
+
+.explaination-container{
+    position: absolute; 
+    right:250px;
+    bottom: 100px;
+      
+}
+
+#explaination{
+    font-weight: normal; 
+    opacity:0%; 
+}

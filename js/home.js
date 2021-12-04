@@ -334,6 +334,9 @@ let con8Label = document.getElementById('con8-label');
 let con9 = document.getElementById('con9'); 
 let con9Label = document.getElementById('con9-label');
 
+let explaination = document.getElementById('explaination'); 
+let explainationContainer = document.getElementsByClassName('explaination-container'); 
+
 let graphCoordinates = [[100, 100], [300, 80], [500, 120], [660, 200], [720,340], [660, 480], [500, 480], [290, 530], [90, 320]]; 
 
 let c = document.getElementById('myCanvas'); 
@@ -609,6 +612,42 @@ submitCharacter.onclick = function findCharacters(){
              ctx.fillStyle = ''; 
              ctx.strokeStyle = ''
 
+             //two characters 
+             //short path 
+             let sourceOne = twoCharacters[0]; 
+             let endOne = twoCharacters[1]; 
+
+             let textSay = `The connection between ${sourceOne} and ${endOne} includes `; 
+
+             textSay+=`${sourceOne}`; 
+             textSay+=', '
+
+             let countChar = 0; 
+
+             for(let z = 0; z<shortPath.length; z++){
+                textSay += shortPath[z]; 
+                if(z != shortPath.length - 1){
+                textSay += ', '; 
+                } 
+                if(shortPath[z] != 'Romeo' || shortPath[z] != 'Juliet'){
+                    countChar++; 
+                }
+             }
+
+             if(countChar != 0){
+                 textSay+='\n'; 
+                 textSay+=`At this point of the story, ${sourceOne} and ${endOne} will not be singularly focused on each other, keeping their thoughts and actions clear!`; 
+             }
+             else{
+                 textSay+='\n'; 
+                 textSay+=`At this point of the story, ${sourceOne} and ${endOne} are singularly focused and overdependent on each other. Predict some chaos or crazy actions by the two characters.`
+             }
+
+             console.log("TEXT SAY", textSay); 
+
+             explaination.innerText = textSay;  
+
+             explaination.style.opacity = '100%'; 
 
 
             } 
